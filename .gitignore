@@ -1,0 +1,33 @@
+# Binários compilados
+bin/
+dist/
+sql-cli
+*.exe
+
+# Dependências Go (gerenciadas via go mod)
+vendor/
+
+# Arquivos de teste e cobertura
+*.test
+*.out
+coverage.html
+
+# Dados e configurações locais (não versionar)
+*.db
+*.sqlite
+*.sqlite3
+
+# Temporários e logs
+*.log
+*.tmp
+*.swp
+*.swo
+*~
+
+# IDEs
+.idea/
+.vscode/
+*.code-workspace
+
+# macOS
+.DS_Store
