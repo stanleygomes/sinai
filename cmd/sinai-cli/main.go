@@ -6,16 +6,20 @@ import (
 
 	tea "charm.land/bubbletea/v2"
 	"github.com/stanley/sql-cli/internal/config"
+	"github.com/stanley/sql-cli/internal/env"
 	"github.com/stanley/sql-cli/internal/tui"
 )
 
 // main is the entry point of the application.
 //
 // It performs the following tasks:
+// - Loads environment variables from the .env file.
 // - Loads the saved configuration from disk.
 // - Initializes the TUI root model with the configuration and path.
 // - Starts the Bubble Tea event loop to run the terminal user interface.
 func main() {
+	env.Load()
+
 	cfg, err := config.Load()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error loading configuration: %v\n", err)

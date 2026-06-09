@@ -31,3 +31,6 @@ coverage.html
 
 # macOS
 .DS_Store
+
+# environment variables
+.env
