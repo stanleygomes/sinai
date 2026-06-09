@@ -16,7 +16,6 @@ func AddConnection(cfg *AppConfig, name, driver, dsn string) (Connection, error)
 		Driver:    driver,
 		DSN:       dsn,
 		CreatedAt: time.Now(),
-		History:   []HistoryEntry{},
 	}
 	cfg.Connections = append(cfg.Connections, conn)
 	return conn, Save(cfg)

@@ -9,20 +9,6 @@ const (
 	ConfigFile = "config.json"
 )
 
-// HistoryEntry represents an entry in the query execution history of a connection.
-type HistoryEntry struct {
-	// ID is the unique identifier of the history entry.
-	ID string `json:"id"`
-	// Query is the executed SQL query text.
-	Query string `json:"query"`
-	// ExecutedAt is the timestamp of when the query was executed.
-	ExecutedAt time.Time `json:"executed_at"`
-	// DurationMs is the execution time in milliseconds.
-	DurationMs int64 `json:"duration_ms"`
-	// Error stores the error message, if the query failed.
-	Error string `json:"error,omitempty"`
-}
-
 // Connection represents a saved database connection.
 type Connection struct {
 	// ID is the unique identifier automatically generated (UUID v4).
@@ -37,9 +23,6 @@ type Connection struct {
 	DSN string `json:"dsn"`
 	// CreatedAt is the timestamp of when the connection was created.
 	CreatedAt time.Time `json:"created_at"`
-	// History contains the latest queries executed on this connection.
-	// It is kept in reverse chronological order (newest first).
-	History []HistoryEntry `json:"history,omitempty"`
 }
 
 // AppConfig is the root structure of the configuration file.

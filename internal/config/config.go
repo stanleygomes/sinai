@@ -1,5 +1,5 @@
 // Package config manages the persistence of application settings,
-// including saved connections and query history, in JSON format.
+// including saved connections, in JSON format.
 // The configuration file is stored in $HOME/.config/sinai/config.json,
 // following the XDG Base Directory specification.
 package config
