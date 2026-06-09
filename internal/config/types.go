@@ -3,54 +3,54 @@ package config
 import "time"
 
 const (
-	// ConfigDir é o diretório relativo a $HOME/.config onde os dados são salvos.
+	// ConfigDir is the directory relative to $HOME/.config where data is saved.
 	ConfigDir = "sinai"
-	// ConfigFile é o nome do arquivo de configuração JSON.
+	// ConfigFile is the name of the JSON configuration file.
 	ConfigFile = "config.json"
 )
 
-// HistoryEntry representa uma entrada no histórico de queries de uma conexão.
+// HistoryEntry represents an entry in the query execution history of a connection.
 type HistoryEntry struct {
-	// ID único da entrada no histórico.
+	// ID is the unique identifier of the history entry.
 	ID string `json:"id"`
-	// Query é o texto SQL executado.
+	// Query is the executed SQL query text.
 	Query string `json:"query"`
-	// ExecutedAt é o timestamp de quando a query foi executada.
+	// ExecutedAt is the timestamp of when the query was executed.
 	ExecutedAt time.Time `json:"executed_at"`
-	// DurationMs é o tempo de execução em milissegundos.
+	// DurationMs is the execution time in milliseconds.
 	DurationMs int64 `json:"duration_ms"`
-	// Error armazena a mensagem de erro, caso a query tenha falhado.
+	// Error stores the error message, if the query failed.
 	Error string `json:"error,omitempty"`
 }
 
-// Connection representa uma conexão de banco de dados salva.
+// Connection represents a saved database connection.
 type Connection struct {
-	// ID é o identificador único gerado automaticamente (UUID v4).
+	// ID is the unique identifier automatically generated (UUID v4).
 	ID string `json:"id"`
-	// Name é o nome amigável exibido na interface (ex: "Produção", "Dev Local").
+	// Name is the friendly display name shown in the UI (e.g., "Production", "Local Dev").
 	Name string `json:"name"`
-	// Driver é o identificador do driver de banco (ex: "sqlite", "postgres").
+	// Driver is the database driver identifier (e.g., "sqlite", "postgres").
 	Driver string `json:"driver"`
-	// DSN é a Data Source Name — string de conexão específica do driver.
-	// Para SQLite: caminho do arquivo (ex: "/home/user/db.sqlite")
-	// Para Postgres: string de conexão padrão (ex: "host=... user=... dbname=...")
+	// DSN is the Data Source Name — driver-specific connection string.
+	// For SQLite: file path (e.g., "/home/user/db.sqlite")
+	// For Postgres: standard connection string (e.g., "host=... user=... dbname=...")
 	DSN string `json:"dsn"`
-	// CreatedAt é o timestamp de quando a conexão foi criada.
+	// CreatedAt is the timestamp of when the connection was created.
 	CreatedAt time.Time `json:"created_at"`
-	// History contém as últimas queries executadas nesta conexão.
-	// É mantido em ordem cronológica decrescente (mais recente primeiro).
+	// History contains the latest queries executed on this connection.
+	// It is kept in reverse chronological order (newest first).
 	History []HistoryEntry `json:"history,omitempty"`
 }
 
-// AppConfig é a estrutura raiz do arquivo de configuração.
+// AppConfig is the root structure of the configuration file.
 type AppConfig struct {
-	// Version é a versão do schema de configuração, para migrações futuras.
+	// Version is the configuration schema version, for future migrations.
 	Version int `json:"version"`
-	// Connections é a lista de conexões salvas pelo usuário.
+	// Connections is the list of database connections saved by the user.
 	Connections []Connection `json:"connections"`
-	// LastConnectionID guarda o ID da última conexão usada,
-	// para selecioná-la automaticamente ao abrir o app.
+	// LastConnectionID stores the ID of the last active connection,
+	// used to automatically select it when opening the app.
 	LastConnectionID string `json:"last_connection_id,omitempty"`
-	// Path armazena o caminho do arquivo de configuração no disco (não persistido no JSON).
+	// Path stores the configuration file path on disk (not serialized to JSON).
 	Path string `json:"-"`
 }
