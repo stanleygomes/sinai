@@ -63,6 +63,8 @@ type AppConfig struct {
 	// LastConnectionID guarda o ID da última conexão usada,
 	// para selecioná-la automaticamente ao abrir o app.
 	LastConnectionID string `json:"last_connection_id,omitempty"`
+	// Path armazena o caminho do arquivo de configuração no disco (não persistido no JSON).
+	Path string `json:"-"`
 }
 
 // ConfigPath retorna o caminho absoluto do arquivo de configuração.
@@ -91,7 +93,7 @@ func Load() (*AppConfig, error) {
 	data, err := os.ReadFile(path)
 	if os.IsNotExist(err) {
 		// Primeira execução: retorna configuração padrão.
-		return &AppConfig{Version: 1, Connections: []Connection{}}, nil
+		return &AppConfig{Version: 1, Connections: []Connection{}, Path: path}, nil
 	}
 	if err != nil {
 		return nil, fmt.Errorf("erro ao ler %s: %w", path, err)
@@ -101,15 +103,20 @@ func Load() (*AppConfig, error) {
 	if err := json.Unmarshal(data, &cfg); err != nil {
 		return nil, fmt.Errorf("erro ao decodificar %s: %w", path, err)
 	}
+	cfg.Path = path
 
 	return &cfg, nil
 }
 
 // Save persiste a configuração no arquivo JSON, criando o diretório se necessário.
 func Save(cfg *AppConfig) error {
-	path, err := ConfigPath()
-	if err != nil {
-		return err
+	path := cfg.Path
+	if path == "" {
+		var err error
+		path, err = ConfigPath()
+		if err != nil {
+			return err
+		}
 	}
 
 	// Garante que o diretório de configuração existe.

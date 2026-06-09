@@ -25,28 +25,12 @@ var mountainArt = []struct {
 	line  string
 	color color.Color
 }{
-	{"                 /\\                 ", lipgloss.Color("#FFFFFF")},
-	{"                /  \\  /\\            ", lipgloss.Color("#E0E6FF")},
-	{"          /\\   /    \\/  \\           ", lipgloss.Color("#C8D4FF")},
-	{"         /  \\ /          \\          ", lipgloss.Color("#B2C2EE")},
-	{"        /    /            \\/\\       ", lipgloss.Color("#9BACD4")},
-	{"       /    /                \\      ", lipgloss.Color("#8598BA")},
-	{"      /    /                  \\     ", lipgloss.Color("#6B7DB3")},
-	{"     /    /                    \\    ", lipgloss.Color("#556691")},
-	{"    /    /                      \\   ", lipgloss.Color("#4A5980")},
-	{"   /    /                        \\  ", lipgloss.Color("#3D4B6E")},
-	{"  /    /                          \\ ", lipgloss.Color("#303E5C")},
-	{" /____/____________________________\\", lipgloss.Color("#24314A")},
-}
-
-// sinaiArt é a arte ASCII do nome do projeto em fonte Big (FIGlet).
-// S       I       N         A          I
-var sinaiArt = []string{
-	` ____    ___   _   _       _       ___ `,
-	`/ ___|  |_ _| | \ | |     / \     |_ _|`,
-	`\___ \   | |  |  \| |    / _ \     | | `,
-	` ___) |  | |  | |\  |   / ___ \    | | `,
-	`|____/  |___| |_| \_|  /_/   \_\  |___|`,
+	{"          /\\          ", lipgloss.Color("#FFFFFF")},
+	{"         /  \\  /\\     ", lipgloss.Color("#C8D4FF")},
+	{"    /\\  /    \\/  \\    ", lipgloss.Color("#9BACD4")},
+	{"   /  \\/            \\ ", lipgloss.Color("#6B7DB3")},
+	{"  /   /              \\", lipgloss.Color("#3D4B6E")},
+	{" /___/______________\\ ", lipgloss.Color("#24314A")},
 }
 
 // --- Estilos ---
@@ -183,7 +167,6 @@ func renderShadowBanner(art []string) string {
 // renderBanner junta montanha + SINAI com shadow + divisor.
 func renderBanner() string {
 	mountain := renderMountain()
-
 	divider := bannerDivStyle.Render(strings.Repeat("─", 44))
 
 	return lipgloss.JoinVertical(
@@ -261,10 +244,8 @@ func (m ConnectionListModel) View() string {
 	if m.height > 22 {
 		sections = append(sections, renderBanner())
 	} else if m.height > 14 {
-		// Sem montanha, só SINAI + divider.
-		sinai := strings.TrimRight(renderShadowBanner(sinaiArt), "\n")
 		div := bannerDivStyle.Render(strings.Repeat("─", 44))
-		sections = append(sections, lipgloss.JoinVertical(lipgloss.Center, sinai, div))
+		sections = append(sections, lipgloss.JoinVertical(lipgloss.Center, div))
 	}
 
 	sections = append(sections, m.renderSubtitle())
