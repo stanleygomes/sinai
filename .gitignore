@@ -1,7 +1,7 @@
 # Binários compilados
 bin/
 dist/
-sql-cli
+/sql-cli
 *.exe
 
 # Dependências Go (gerenciadas via go mod)
