@@ -7,8 +7,8 @@ import (
 	"github.com/google/uuid"
 )
 
-// AddConnection adiciona uma nova conexão à configuração e salva.
-// Gera automaticamente um ID único e o timestamp de criação.
+// AddConnection adds a new connection to the configuration and saves it.
+// Automatically generates a unique ID and the creation timestamp.
 func AddConnection(cfg *AppConfig, name, driver, dsn string) (Connection, error) {
 	conn := Connection{
 		ID:        uuid.NewString(),
@@ -21,7 +21,7 @@ func AddConnection(cfg *AppConfig, name, driver, dsn string) (Connection, error)
 	return conn, Save(cfg)
 }
 
-// UpdateConnection atualiza os dados de uma conexão existente pelo ID.
+// UpdateConnection updates the details of an existing connection by ID.
 func UpdateConnection(cfg *AppConfig, id, name, driver, dsn string) error {
 	for i, c := range cfg.Connections {
 		if c.ID == id {
@@ -31,10 +31,10 @@ func UpdateConnection(cfg *AppConfig, id, name, driver, dsn string) error {
 			return Save(cfg)
 		}
 	}
-	return fmt.Errorf("conexão com ID %q não encontrada", id)
+	return fmt.Errorf("connection with ID %q not found", id)
 }
 
-// DeleteConnection remove uma conexão pelo ID e salva.
+// DeleteConnection removes a connection by ID and saves the configuration.
 func DeleteConnection(cfg *AppConfig, id string) error {
 	for i, c := range cfg.Connections {
 		if c.ID == id {
@@ -45,10 +45,10 @@ func DeleteConnection(cfg *AppConfig, id string) error {
 			return Save(cfg)
 		}
 	}
-	return fmt.Errorf("conexão com ID %q não encontrada", id)
+	return fmt.Errorf("connection with ID %q not found", id)
 }
 
-// FindConnection retorna um ponteiro para a conexão com o ID informado, ou nil.
+// FindConnection returns a pointer to the connection with the given ID, or nil.
 func FindConnection(cfg *AppConfig, id string) *Connection {
 	for i := range cfg.Connections {
 		if cfg.Connections[i].ID == id {
