@@ -91,7 +91,7 @@ func (c *sqliteClient) Query(ctx context.Context, query string) (*QueryResult, e
 	if err != nil {
 		return nil, fmt.Errorf("failed to execute query: %w", err)
 	}
-	defer rows.Close()
+	defer func() { _ = rows.Close() }()
 
 	colTypes, err := rows.ColumnTypes()
 	if err != nil {
@@ -142,7 +142,7 @@ func (c *sqliteClient) Tables(ctx context.Context) ([]string, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to list tables: %w", err)
 	}
-	defer rows.Close()
+	defer func() { _ = rows.Close() }()
 
 	var tables []string
 	for rows.Next() {
